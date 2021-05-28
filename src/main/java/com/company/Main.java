@@ -15,6 +15,8 @@ import java.util.Locale;
 public class Main {
     public static ArrayList<Command> commands = new ArrayList<>();
     public static String error = "поле введено неверно. Заменено на ";
+    public static String username = "";
+    public static String password = "";
 
 
     public static void main(String[] args) throws Exception {
@@ -35,6 +37,11 @@ public class Main {
             }
         }
 
+        Printer.getInstance().WriteLine("введите имя пользователя");
+        username = Printer.getInstance().ReadLine();
+
+        Printer.getInstance().WriteLine("введите пароль");
+        password = Printer.getInstance().ReadLine();
 
         try {
             for (Class<? extends Command> class1 : (new Reflections("com.company.Commands")).getSubTypesOf(Command.class)) {// получаем все классы наследуемые от command
@@ -68,6 +75,9 @@ public class Main {
                     server_send.args = new ArrayList<>(Arrays.asList(next.split(",")));
                     server_send.args.remove(0);
                 }
+
+                server_send.setPassword(password);
+                server_send.setUsername(username);
 
                 String send_str = Converter.getInstance().Write(server_send);
                 Sender.getInstance().Send(send_str);
