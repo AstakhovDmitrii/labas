@@ -14,6 +14,15 @@ public class Ticket implements Comparable<Ticket>{
     private float price; //Значение поля должно быть больше 0
     private TicketType type; //Поле может быть null
     private Person person; //Поле не может быть null
+    public int create;
+
+    public int getCreate() {
+        return create;
+    }
+
+    public void setCreate(int create) {
+        this.create = create;
+    }
 
     public Ticket() {
         creationDate = ZonedDateTime.now();
@@ -37,7 +46,7 @@ public class Ticket implements Comparable<Ticket>{
     }
 
 
-    public Ticket(Integer id, String name, Coordinates coordinates, float price, TicketType type, Person person) {
+    public Ticket(Integer id, String name, Coordinates coordinates, float price, TicketType type, Person person, int create) {
         setId(id);
         setName(name);
         setCoordinates(coordinates);
@@ -45,6 +54,7 @@ public class Ticket implements Comparable<Ticket>{
         setPrice(price);
         setType(type);
         setPerson(person);
+        this.create = create;
     }
 
     public Integer getId() {

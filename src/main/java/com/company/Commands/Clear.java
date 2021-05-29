@@ -2,12 +2,30 @@ package com.company.Commands;
 
 import com.company.Command;
 import com.company.Main;
+import com.company.Models.Ticket;
+import com.company.Models.user;
 import com.company.Writers.Printer;
 
-public class Clear extends Command {// ни одна команда не используется напрямую. То есть их получение происходит в момент исполнения
+import java.util.ArrayList;
+import java.util.function.BiConsumer;
+
+public class Clear extends Command {
     @Override
-    public void Execute(boolean is_thread) throws Exception {
-        Main.tickets.getTickets().clear();
+    public void Execute(boolean is_thread, user user) throws Exception {
+        if(user.getId() == 0) {
+            Main.tickets.getTickets().clear();
+        }
+        else{
+            ArrayList<String> tickets = new ArrayList<>();
+            Main.tickets.getTickets().forEach((s, ticket) -> {
+                if(ticket.getCreate() == user.getId()){
+                    tickets.add(s);
+                }
+            });
+            for (String ticket : tickets){
+                Main.tickets.getTickets().remove(ticket);
+            }
+        }
         if(is_thread){
             Printer.getInstance().WriteLine("список очищен");
         }

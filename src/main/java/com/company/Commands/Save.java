@@ -1,14 +1,18 @@
 package com.company.Commands;
 
 import com.company.Command;
-import com.company.Helpers.Converter;
 import com.company.Main;
+import com.company.Models.Ticket;
+import com.company.Models.user;
+
+import java.util.function.BiConsumer;
 
 public class Save extends Command {
     @Override
-    public void Execute(boolean is_thread) throws Exception {
+    public void Execute(boolean is_thread, user user) throws Exception {
         if(is_thread){
-            Converter.getInstance().write_to_file(Main.tickets, Main.path);
+            Main.db.DeleteAllTickets();
+            Main.tickets.getTickets().forEach((s, ticket) -> Main.db.AddTicket(ticket, s));
         }
     }
 }

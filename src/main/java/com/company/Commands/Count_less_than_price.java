@@ -3,15 +3,18 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.user;
 import com.company.Writers.Printer;
+
+import java.util.ArrayList;
 
 public class Count_less_than_price extends Command {
     @Override
-    public void Execute(boolean is_thread) {
+    public void Execute(boolean is_thread, user user) {
         if(args.size() == 1){
             try {
                 int count = 0;
-                int price = Integer.parseInt(args.get(0).trim());// trim нужен чтобы убрать пробелы сначала и с конца
+                int price = Integer.parseInt(args.get(0).trim());
                 for (Ticket ticket : Main.tickets.getTickets().values()){
                     if(ticket.getPrice() < price ){
                         count++;

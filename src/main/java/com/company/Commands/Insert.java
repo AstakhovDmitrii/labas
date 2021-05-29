@@ -4,13 +4,16 @@ import com.company.Command;
 import com.company.Helpers.Converter;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.user;
 import com.company.Writers.Printer;
 
 public class Insert extends Command {
     @Override
-    public void Execute(boolean is_thread) throws Exception {
+    public void Execute(boolean is_thread, user user) throws Exception {
         if(args.size() >= 2) {
-            Main.tickets.getTickets().put(args.get(0), Converter.getInstance().Read(Ticket.class, args.get(1)));
+            Ticket ticket = Converter.getInstance().Read(Ticket.class, args.get(1));
+            ticket.setCreate(user.getId());
+            Main.tickets.getTickets().put(args.get(0), ticket);
         }
         else{
             if(is_thread){
