@@ -9,6 +9,7 @@ import com.company.Writers.Printer;
 import org.reflections.Reflections;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.*;
 import java.nio.charset.Charset;
@@ -18,16 +19,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
-
+    public static ExecutorService service = Executors.newFixedThreadPool(1);
     public static DatagramPacket recieve = new DatagramPacket(new byte[2048], 2048);
     public static DatagramPacket send;
     public static DatagramSocket server;
     public static ArrayList<Command> commands = new ArrayList<>();
-    public static Writer writer = new Writer();
     public static Tickets tickets = new Tickets();
-    public static int ids = 0;
     public static LocalDateTime start;
     public static String ip = "192.168.5.1";
     public static int port = 1112;
@@ -46,10 +47,11 @@ public class Main {
                     if (next.startsWith(command.getName()) || next.toLowerCase(Locale.ROOT).startsWith(command.getName().toLowerCase(Locale.ROOT))) {
                         command.args.addAll(Arrays.asList(next.split(",")));
                         command.args.remove(0);
-                        if(command.getClass() == Insert.class || command.getClass() == Replace_if_greater.class || command.getClass() == Replace_if_lower.class || command.getClass() == Update.class){
+                        String NameCommand = command.getName();
+                        if(NameCommand.toLowerCase(Locale.ROOT).startsWith("insert") || NameCommand.toLowerCase(Locale.ROOT).startsWith("replace_if_greater") || NameCommand.toLowerCase(Locale.ROOT).startsWith("replace_if_lower") || NameCommand.toLowerCase(Locale.ROOT).startsWith("update")){
                             command.args.add(Converter.getInstance().Write(Create.Set_Fields()));
                         }
-                        command.Execute(true, user);
+                        command.Execute(true, user, null);
                         isCommand = true;
                         command.args.clear();
                     }
@@ -65,6 +67,59 @@ public class Main {
         }
     }
 
+    public static void send(){
+        try {
+            while (true) {
+                recieve = new DatagramPacket(new byte[2048], 2048);
+                server.receive(recieve);
+                logger.WriteLine("получено сообщение от клиента c ip: " + recieve.getAddress() + recieve.getData());
+                Command command = Converter.getInstance().GetCommand(recieve.getData());
+                boolean is = false;
+                Writer writer = new Writer();
+                for (Command command1 : commands) {
+                    if (command.getName().startsWith(command1.getName()) || command.getName().toLowerCase(Locale.ROOT).startsWith(command1.getName().toLowerCase(Locale.ROOT))) {
+                        command1.args = command.args;
+                        if (!command.getName().toLowerCase(Locale.ROOT).equals("register")) {
+                            try {
+                                user user = db.GetUser(command.getUsername(), command.getPassword());
+                                if (user != null) {
+                                    command1.Execute(false, user, writer);
+                                } else {
+                                    writer.getResponces().add("пользователя не существует");
+                                }
+                            } catch (NoSuchElementException e) {
+                                writer.getResponces().add("пользователя не существует");
+                            }
+                        } else {
+                            db.AddUser(new user(command.getUsername(), command.getPassword()));
+                        }
+                        is = true;
+                    }
+                }
+                if (!is) {
+                    writer.getResponces().add("такой команды не существует");
+                }
+                System.out.println(recieve.getAddress());
+                writer.getResponces().add("введите команду");
+                byte[] response = Converter.getInstance().GetResponce(writer);
+                writer.getResponces().clear();
+                send = new DatagramPacket(response, response.length, recieve.getAddress(), port - 1);
+                logger.WriteLine("отправлен ответ на: " + recieve.getAddress());
+                Thread thread = new Thread(() -> {
+                    try {
+                        server.send(send);
+                    } catch (IOException ignored) {
+                    }
+                });
+                thread.start();
+            }
+        }
+        catch (Exception ignored){
+            logger.WriteLine(ignored.getMessage());
+            ignored.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         db = new DB("jdbc:postgresql://localhost:5432/db", "postgres","postgres");
 
@@ -73,12 +128,11 @@ public class Main {
         try{
             address = InetAddress.getByName(System.getenv("address"));
         }
-        catch (UnknownHostException e){
-            address = InetAddress.getByName(ip);
+        catch (UnknownHostException ignored){
         }
         address = InetAddress.getByName(ip);
         try{
-             logger = new Logger(new FileOutputStream("C:\\log.txt"));
+             logger = new Logger();
         }
         catch (Exception ignored){
 
@@ -115,55 +169,6 @@ public class Main {
         }
         server = new DatagramSocket(port, address);
         logger.WriteLine("сервер запущен");
-        try {
-            while (true) {
-                recieve = new DatagramPacket(new byte[2048], 2048);
-                server.receive(recieve);
-                logger.WriteLine("получено сообщение от клиента c ip: " + recieve.getAddress());
-                String out = new String(recieve.getData(), StandardCharsets.UTF_16);
-                Command command = Converter.getInstance().Read(Exist.class, out);
-                logger.WriteLine("текст сообщения: " + out);
-                boolean is = false;
-                for (Command command1 : commands) {
-                    if (command.getName().startsWith(command1.getName()) || command.getName().toLowerCase(Locale.ROOT).startsWith(command1.getName().toLowerCase(Locale.ROOT))) {
-                        command1.args = command.args;
-                        if(!command.getName().toLowerCase(Locale.ROOT).equals("register")) {
-                            try {
-                                command1.Execute(false, db.GetUser(command.getUsername(), command.getPassword()));
-                            } catch (NoSuchElementException e) {
-                                writer.getResponces().add("пользователя не существует");
-                                e.printStackTrace();
-                            }
-                        }
-                        else{
-                            db.AddUser(new user(command.getUsername(), command.getPassword()));
-                        }
-                        is = true;
-                    }
-                }
-                if (!is) {
-                    writer.getResponces().add("такой команды не существует");
-                }
-                writer.getResponces().add("введите команду");
-
-                byte[] response = Converter.getInstance().Write(writer).getBytes(StandardCharsets.UTF_16);
-                writer.getResponces().clear();
-                send = new DatagramPacket(response, response.length, recieve.getAddress(), port-1);
-                logger.WriteLine("отправлен ответ на: " + recieve.getAddress() + ".Текст: " + Converter.getInstance().Write(writer));
-                server.send(send);
-            }
-        }
-        catch (Exception e){
-
-        }
-        try {
-            Main.tickets.getTickets().forEach((s, ticket) -> Main.db.AddTicket(ticket, s));
-            Printer.getInstance().Close();
-        }
-        catch (Exception ignored){
-
-        }
-        logger.WriteLine("сервер закончил работу");
-        logger.log_steam.close();
+        service.submit(Main::send);
     }
 }

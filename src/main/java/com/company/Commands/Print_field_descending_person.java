@@ -3,6 +3,7 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
@@ -11,7 +12,7 @@ import java.util.Comparator;
 
 public class Print_field_descending_person  extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) {
+    public void Execute(boolean is_thread, user user, Writer writer) {
         try {
             Object[] arrays = Main.tickets.getTickets().values().toArray();
             Arrays.sort(arrays, Comparator.comparing(o -> ((Ticket)o)));// сортируем массив по убыванию
@@ -20,12 +21,12 @@ public class Print_field_descending_person  extends Command {
                     Printer.getInstance().WriteLine(ticket.toString());
                 }
                 else {
-                    Main.writer.getResponces().add(ticket.toString());
+                    writer.getResponces().add(ticket.toString());
                 }
             }
         }
         catch (Exception e){
-            Main.writer.getResponces().add(e.getMessage());
+            writer.getResponces().add(e.getMessage());
         }
     }
 }

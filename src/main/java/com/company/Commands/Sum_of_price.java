@@ -3,12 +3,13 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
 public class Sum_of_price extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) {
+    public void Execute(boolean is_thread, user user, Writer writer) {
         float count = 0;
         for (Ticket ticket: Main.tickets.getTickets().values()) {
             count += ticket.getPrice();
@@ -17,7 +18,7 @@ public class Sum_of_price extends Command {
             Printer.getInstance().WriteLine(String.valueOf(count));
         }
         else {
-            Main.writer.getResponces().add(String.valueOf(count));
+            writer.getResponces().add(String.valueOf(count));
         }
     }
 }

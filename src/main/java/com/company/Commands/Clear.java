@@ -3,6 +3,7 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
@@ -11,7 +12,7 @@ import java.util.function.BiConsumer;
 
 public class Clear extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) throws Exception {
+    public void Execute(boolean is_thread, user user, Writer writer) throws Exception {
         if(user.getId() == 0) {
             Main.tickets.getTickets().clear();
         }
@@ -30,7 +31,7 @@ public class Clear extends Command {
             Printer.getInstance().WriteLine("список очищен");
         }
         else {
-            Main.writer.getResponces().add("список очищен");
+            writer.getResponces().add("список очищен");
         }
     }
 

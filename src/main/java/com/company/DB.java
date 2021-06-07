@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -24,7 +25,7 @@ public class DB {
         }
     }
 
-    public void AddUser(user user) {
+    public synchronized void AddUser(user user) {
         String sql = "INSERT INTO "
                 + db_user + "(name, password) "
                 + "VALUES(?, ?)";
@@ -55,33 +56,38 @@ public class DB {
             return Id;
         });
     }
-    public user GetUser(String username, String password) {
-        return connection.flatMap(conn -> {
-            Optional<user> customer = Optional.empty();
-            String sql = "SELECT * FROM " + db_user + " WHERE \"name\" = '" + username + "' AND \"password\" ='" + DigestUtils.md5Hex(password) + "'";
+    public synchronized user GetUser(String username, String password) {
+        try {
+            return connection.flatMap(conn -> {
+                Optional<user> customer = Optional.empty();
+                String sql = "SELECT * FROM " + db_user + " WHERE \"name\" = '" + username + "' AND \"password\" ='" + DigestUtils.md5Hex(password) + "'";
 
-            try (Statement statement = conn.createStatement();
-                 ResultSet resultSet = statement.executeQuery(sql)) {
+                try (PreparedStatement statement = conn.prepareStatement(sql);
+                     ResultSet resultSet = statement.executeQuery()) {
 
-                if (resultSet.next()) {
-                    int id = resultSet.getInt("id");
+                    if (resultSet.next()) {
+                        int id = resultSet.getInt("id");
 
-                    return Optional.of(
-                            new user(username, password, id));
+                        return Optional.of(
+                                new user(username, password, id));
+                    }
+                } catch (SQLException ignored) {
+                    ignored.printStackTrace();
                 }
-            } catch (SQLException ignored) {
-
-            }
-            return customer;
-        }).orElseThrow();
+                return customer;
+            }).orElseThrow();
+        }
+        catch (NoSuchElementException e){
+            return null;
+        }
     }
-    public Collection<user> GetAllUsers(){
+    public synchronized Collection<user> GetAllUsers(){
         Collection<user> customers = new ArrayList<>();
         String sql = "SELECT * FROM " + db_user;
 
         connection.ifPresent(conn -> {
-            try (Statement statement = conn.createStatement();
-                 ResultSet resultSet = statement.executeQuery(sql)) {
+            try (PreparedStatement statement = conn.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
 
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
@@ -94,11 +100,12 @@ public class DB {
                 }
 
             } catch (SQLException ignored) {
+                System.out.println(ignored.getMessage());
             }
         });
         return customers;
     }
-    public void DeleteUser(user user) {
+    public synchronized void DeleteUser(user user) {
         String sql = "DELETE FROM " + db_user + " WHERE id = ?";
 
         connection.ifPresent(conn -> {
@@ -109,7 +116,7 @@ public class DB {
             }
         });
     }
-    public void DeleteUser(int id) {
+    public synchronized void DeleteUser(int id) {
         String sql = "DELETE FROM " + db_user + " WHERE id = ?";
 
         connection.ifPresent(conn -> {
@@ -120,21 +127,21 @@ public class DB {
             }
         });
     }
-    public void DeleteAllUsers() {
-        String sql = "DELETE FROM " + db_user;
+    public synchronized void DeleteAllUsers() {
+            String sql = "DELETE FROM " + db_user;
 
-        connection.ifPresent(conn -> {
-            try {
-                PreparedStatement statement = conn.prepareStatement(sql);
-                statement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
+            connection.ifPresent(conn -> {
+                try {
+                    PreparedStatement statement = conn.prepareStatement(sql);
+                    statement.executeUpdate();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            });
     }
 
-    public void AddTicket(Ticket ticket, String key) {
 
+    public synchronized void AddTicket(Ticket ticket, String key) {
         String sql = "INSERT INTO "
                 + db_tickets + " (\"name\", \"creationDate\", \"ticketType\" , \"x\", \"y\", \"price\", \"height\", \"weight\", \"create_user\", \"key\") "
                 + "VALUES(?, ?, ?, ?, ?, ? , ? ,? ,?,?)";
@@ -176,7 +183,7 @@ public class DB {
             return Id;
         });
     }
-    public void DeleteAllTickets() {
+    public synchronized void DeleteAllTickets() {
         String sql = "DELETE FROM " + db_tickets;
 
         connection.ifPresent(conn -> {
@@ -188,35 +195,13 @@ public class DB {
             }
         });
     }
-    public void DeleteTicket(Ticket ticket) {
-        String sql = "DELETE FROM "  + db_tickets + " WHERE id = ?";
-
-        connection.ifPresent(conn -> {
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setInt(1, ticket.getId());
-                statement.executeUpdate();
-            } catch (SQLException ignored) {
-            }
-        });
-    }
-    public void DeleteTicket(int id) {
-        String sql = "DELETE FROM "  + db_tickets + " WHERE id = ?";
-
-        connection.ifPresent(conn -> {
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setInt(1, id);
-                statement.executeUpdate();
-            } catch (SQLException ignored) {
-            }
-        });
-    }
-    public keyset GetTicket(int id) {
+    public synchronized keyset GetTicket(int id) {
         return  connection.flatMap(conn -> {
             Optional<keyset> customer = Optional.empty();
             String sql = "SELECT * FROM " + db_tickets + " WHERE id = " + id;
 
-            try (Statement statement = conn.createStatement();
-                 ResultSet resultSet = statement.executeQuery(sql)) {
+            try (PreparedStatement statement = conn.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
 
                 if (resultSet.next()) {
                     String name = resultSet.getString("name");
@@ -238,7 +223,7 @@ public class DB {
             return customer;
         }).orElseThrow();
     }
-    public Collection<keyset> GetAllTicket(){
+    public synchronized Collection<keyset> GetAllTicket(){
         Collection<keyset> tickets = new ArrayList<>();
         String sql = "SELECT * FROM " + db_tickets;
 

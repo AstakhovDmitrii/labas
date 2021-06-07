@@ -4,6 +4,7 @@ import com.company.Command;
 import com.company.Helpers.Converter;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class Update extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) {
+    public void Execute(boolean is_thread, user user, Writer writer) {
         if(args.size() == 2){
             for (Map.Entry<String, Ticket> t : Main.tickets.getTickets().entrySet()) {
                 if(t.getValue().getId().equals(Integer.parseInt(args.get(0))) && (user.getId() == t.getValue().getCreate() || user.getId() == 0)){
@@ -20,7 +21,7 @@ public class Update extends Command {
                         Printer.getInstance().WriteLine("успех");
                     }
                     else {
-                        Main.writer.getResponces().add("успех");
+                        writer.getResponces().add("успех");
                     }
                     break;
                 }
@@ -31,7 +32,7 @@ public class Update extends Command {
                 Printer.getInstance().WriteLine("неверное кол-во аргументов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргументов");
+                writer.getResponces().add("неверное кол-во аргументов");
             }
         }
     }

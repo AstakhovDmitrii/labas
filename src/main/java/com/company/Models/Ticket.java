@@ -28,8 +28,7 @@ public class Ticket implements Comparable<Ticket>{
         creationDate = ZonedDateTime.now();
         coordinates = new Coordinates();
         person = new Person();
-        id = Main.ids;
-        Main.ids++;
+        id = 0;
     }
 
     @Override

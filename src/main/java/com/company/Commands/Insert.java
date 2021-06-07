@@ -4,12 +4,13 @@ import com.company.Command;
 import com.company.Helpers.Converter;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
 public class Insert extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) throws Exception {
+    public void Execute(boolean is_thread, user user, Writer writer) throws Exception {
         if(args.size() >= 2) {
             Ticket ticket = Converter.getInstance().Read(Ticket.class, args.get(1));
             ticket.setCreate(user.getId());
@@ -20,7 +21,7 @@ public class Insert extends Command {
                 Printer.getInstance().WriteLine("неверное кол-во аргументов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргументов");
+                writer.getResponces().add("неверное кол-во аргументов");
             }
         }
     }

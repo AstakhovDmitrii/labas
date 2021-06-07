@@ -3,6 +3,7 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
@@ -11,7 +12,7 @@ import java.util.function.BiConsumer;
 
 public class Remove_greater_key  extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) {
+    public void Execute(boolean is_thread, user user, Writer writer) {
         try {
             if (args.size() == 1) {
                 ArrayList<String> keys = new ArrayList<>();
@@ -31,7 +32,7 @@ public class Remove_greater_key  extends Command {
                             Printer.getInstance().WriteLine("успех");
                         }
                         else {
-                            Main.writer.getResponces().add("успех");
+                            writer.getResponces().add("успех");
                         }
                     }
                 }
@@ -40,12 +41,12 @@ public class Remove_greater_key  extends Command {
                     Printer.getInstance().WriteLine("неврное клд-во аргументов");
                 }
                 else {
-                    Main.writer.getResponces().add("неврное клд-во аргументов");
+                    writer.getResponces().add("неврное клд-во аргументов");
                 }
             }
         }
         catch (Exception we){
-            Main.writer.getResponces().add(we.getMessage());
+            writer.getResponces().add(we.getMessage());
         }
     }
 }

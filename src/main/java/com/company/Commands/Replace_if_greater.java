@@ -4,12 +4,13 @@ import com.company.Command;
 import com.company.Helpers.Converter;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
 public class Replace_if_greater  extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) {
+    public void Execute(boolean is_thread, user user, Writer writer) {
         if(args.size() == 2){
             Ticket ticket = Converter.getInstance().Read(Ticket.class, args.get(1));
             if(Main.tickets.getTickets().get(args.get(0)) != null) {
@@ -19,7 +20,7 @@ public class Replace_if_greater  extends Command {
                         Printer.getInstance().WriteLine("успех");
                     }
                     else {
-                        Main.writer.getResponces().add("успех");
+                        writer.getResponces().add("успех");
                     }
                 }
                 else{
@@ -27,7 +28,7 @@ public class Replace_if_greater  extends Command {
                         Printer.getInstance().WriteLine("неудача");
                     }
                     else {
-                        Main.writer.getResponces().add("неудача");
+                        writer.getResponces().add("неудача");
                     }
                 }
             }
@@ -36,7 +37,7 @@ public class Replace_if_greater  extends Command {
                     Printer.getInstance().WriteLine("такого нет");
                 }
                 else {
-                    Main.writer.getResponces().add("такого нет");
+                    writer.getResponces().add("такого нет");
                 }
             }
         }
@@ -45,7 +46,7 @@ public class Replace_if_greater  extends Command {
                 Printer.getInstance().WriteLine("неверное кол-во аргуметов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргуметов");
+                writer.getResponces().add("неверное кол-во аргуметов");
             }
         }
     }

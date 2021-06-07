@@ -3,6 +3,7 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class Count_less_than_price extends Command {
     @Override
-    public void Execute(boolean is_thread, user user) {
+    public void Execute(boolean is_thread, user user, Writer writer) {
         if(args.size() == 1){
             try {
                 int count = 0;
@@ -24,7 +25,7 @@ public class Count_less_than_price extends Command {
                     Printer.getInstance().WriteLine("количество " + count);
                 }
                 else {
-                    Main.writer.getResponces().add("количество " + count);
+                    writer.getResponces().add("количество " + count);
                 }
             }
             catch (NumberFormatException e){
@@ -32,7 +33,7 @@ public class Count_less_than_price extends Command {
                     Printer.getInstance().WriteLine("неправильно введено число");
                 }
                 else {
-                    Main.writer.getResponces().add("неправильно введено число");
+                    writer.getResponces().add("неправильно введено число");
                 }
             }
         }
@@ -41,7 +42,7 @@ public class Count_less_than_price extends Command {
                 Printer.getInstance().WriteLine("неверное кол-во аргументов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргументов");
+                writer.getResponces().add("неверное кол-во аргументов");
             }
         }
     }
