@@ -107,7 +107,7 @@ public class Create {
         Printer.getInstance().WriteLine("Вводится coordinate");
 
         double x = getDouble("X");
-        while (x < 629) {
+        while (x > 629) {
             Printer.getInstance().InvalidValue();
             x = getDouble("X");
         }

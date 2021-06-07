@@ -51,7 +51,7 @@ public class Coordinates {
             y = (float)0;
         }
         if(y < -825){
-            Printer.getInstance().WriteLine(Main.error + "011");
+            Printer.getInstance().WriteLine(Main.error + "0");
             y = (float)0;
         }
         this.y = y;

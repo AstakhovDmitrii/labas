@@ -99,7 +99,7 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setPrice(float price) {
         if(price <= 0){
-            Printer.getInstance().WriteLine(Main.error + "011");
+            Printer.getInstance().WriteLine(Main.error + "0");
             price = 0;
         }
         this.price = price;
@@ -119,7 +119,7 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setPerson(Person person) {
         if(person == null){
-            Printer.getInstance().WriteLine(Main.error + "01");
+            Printer.getInstance().WriteLine(Main.error + "0");
             person = new Person();
         }
         this.person = person;
