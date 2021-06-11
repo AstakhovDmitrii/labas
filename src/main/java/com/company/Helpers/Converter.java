@@ -1,7 +1,9 @@
 package com.company.Helpers;
 
 
+import com.company.Command;
 import com.company.Models.Transform_date;
+import com.company.Writes.Printer;
 import org.simpleframework.xml.convert.AnnotationStrategy;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.strategy.Strategy;
@@ -43,6 +45,29 @@ public class Converter {// по сути у этого класса всегда один обьект. И сам клас
             return Persister.read(T, str);
         }
         catch (Exception ignored){
+            return null;
+        }
+    }
+
+    public com.company.Models.Writer GetResponce(byte[] buffer){
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(buffer));
+            return (com.company.Models.Writer) inputStream.readObject();
+        }
+        catch (Exception e){
+            Printer.getInstance().WriteLine(e.getMessage());
+            return null;
+        }
+    }
+    public byte[] GetCommand(Command responce){
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ObjectOutputStream outputStream = new ObjectOutputStream(stream);
+            outputStream.writeObject(responce);
+            return stream.toByteArray();
+        }
+        catch (Exception e){
+            Printer.getInstance().WriteLine(e.getMessage());
             return null;
         }
     }

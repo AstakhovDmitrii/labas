@@ -1,9 +1,12 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Command {// интерфей который обьединяет все команды
+public abstract class Command implements Serializable {// интерфей который обьединяет все команды
+
+    private static final long serialVersionUID = 0x123;
 
     public abstract void Execute() throws Exception;//метод для вызова команды
 

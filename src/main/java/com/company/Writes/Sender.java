@@ -37,20 +37,19 @@ public class Sender {
     public static void Init(InetAddress address_server, int port_server) throws IOException {
         instance = new Sender(address_server ,port_server);
     }
-    public String Recieve(){
+    public byte[] Recieve(){
         try {
             ByteBuffer buffer = ByteBuffer.allocate(2048);
             socket.receive(buffer);
-            return new String(buffer.array(), StandardCharsets.UTF_16);
+            return buffer.array();
         }
         catch (IOException ignored){
             Printer.getInstance().WriteLine("ошибка принятия сообщения" + ignored.getMessage());
-            return "";
+            return null;
         }
     }
 
-    public void Send(String send_string) throws IOException {
-        byte[] buff = send_string.getBytes(StandardCharsets.UTF_16);
+    public void Send(byte[] buff) throws IOException {
         ByteBuffer buffer = ByteBuffer.wrap(buff);
         socket.send(buffer, new InetSocketAddress(address_server, port_server + 1));
     }

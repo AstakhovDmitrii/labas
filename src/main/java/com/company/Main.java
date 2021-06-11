@@ -69,12 +69,12 @@ public class Main {
                     server_send.args.remove(0);
                 }
 
-                String send_str = Converter.getInstance().Write(server_send);
-                Sender.getInstance().Send(send_str);
+                byte[] buffer = Converter.getInstance().GetCommand(server_send);
+                Sender.getInstance().Send(buffer);
 
 
-                String a = Sender.getInstance().Recieve();
-                Writer writer = Converter.getInstance().Read(Writer.class,a);
+                byte[] a = Sender.getInstance().Recieve();
+                Writer writer = Converter.getInstance().GetResponce(a);
                 for (String str : writer.getResponces()) {
                     Printer.getInstance().WriteLine(str);
                 }
