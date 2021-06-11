@@ -7,23 +7,23 @@ import com.company.Writers.Printer;
 
 public class Show extends Command{
     @Override
-    public void Execute(boolean is_thread) throws Exception {
+    public void Execute(boolean isServerSend) throws Exception {
         if(Main.tickets.getTickets().size() != 0) {
             for (Ticket ticket : Main.tickets.getTickets().values()) {
-                if(is_thread){
+                if(isServerSend){
                     Printer.getInstance().WriteLine(ticket.toString());
                 }
                 else {
-                    Main.writer.getResponces().add(ticket.toString());
+                    Main.writer.AddResponce(ticket.toString());
                 }
             }
         }
         else{
-            if(is_thread){
+            if(isServerSend){
                 Printer.getInstance().WriteLine("нет ни одного элмента");
             }
             else {
-                Main.writer.getResponces().add("нет ни одного элмента");
+                Main.writer.AddResponce("нет ни одного элмента");
             }
         }
     }

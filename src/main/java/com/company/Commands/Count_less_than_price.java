@@ -7,7 +7,7 @@ import com.company.Writers.Printer;
 
 public class Count_less_than_price extends Command {
     @Override
-    public void Execute(boolean is_thread) {
+    public void Execute(boolean isServerSend) {
         if(args.size() == 1){
             try {
                 int count = 0;
@@ -17,28 +17,28 @@ public class Count_less_than_price extends Command {
                         count++;
                     }
                 }
-                if(is_thread){
+                if(isServerSend){
                     Printer.getInstance().WriteLine("количество " + count);
                 }
                 else {
-                    Main.writer.getResponces().add("количество " + count);
+                    Main.writer.AddResponce("количество " + count);
                 }
             }
             catch (NumberFormatException e){
-                if(is_thread){
+                if(isServerSend){
                     Printer.getInstance().WriteLine("неправильно введено число");
                 }
                 else {
-                    Main.writer.getResponces().add("неправильно введено число");
+                    Main.writer.AddResponce("неправильно введено число");
                 }
             }
         }
         else{
-            if(is_thread){
+            if(isServerSend){
                 Printer.getInstance().WriteLine("неверное кол-во аргументов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргументов");
+                Main.writer.AddResponce("неверное кол-во аргументов");
             }
         }
     }

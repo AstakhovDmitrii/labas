@@ -10,27 +10,27 @@ import java.util.Map;
 
 public class Update extends Command {
     @Override
-    public void Execute(boolean is_thread) {
+    public void Execute(boolean isServerSend) {
         if(args.size() == 2){
             for (Map.Entry<String, Ticket> t : Main.tickets.getTickets().entrySet()) {
                 if(t.getValue().getId().equals(Integer.parseInt(args.get(0)))){
                     Main.tickets.getTickets().replace(t.getKey(), Converter.getInstance().Read(Ticket.class, args.get(1)));
-                    if(is_thread){
+                    if(isServerSend){
                         Printer.getInstance().WriteLine("успех");
                     }
                     else {
-                        Main.writer.getResponces().add("успех");
+                        Main.writer.AddResponce("успех");
                     }
                     break;
                 }
             }
         }
         else{
-            if(is_thread){
+            if(isServerSend){
                 Printer.getInstance().WriteLine("неверное кол-во аргументов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргументов");
+                Main.writer.AddResponce("неверное кол-во аргументов");
             }
         }
     }

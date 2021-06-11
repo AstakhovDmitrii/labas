@@ -2,7 +2,9 @@ package com.company.Helpers;
 
 
 
+import com.company.Commands.Exist;
 import com.company.Models.Transform_date;
+import com.company.Writers.Printer;
 import org.simpleframework.xml.convert.AnnotationStrategy;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.strategy.Strategy;
@@ -60,6 +62,30 @@ public class Converter {
             return Persister.read(T, new File(path));
         }
         catch (Exception ignored){
+            return null;
+        }
+    }
+
+    public Exist GetCommand(byte[] buffer){
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(buffer));
+            return (Exist) inputStream.readObject();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public byte[] GetResponce(com.company.Models.Writer responce){
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ObjectOutputStream outputStream = new ObjectOutputStream(stream);
+            outputStream.writeObject(responce);
+            return stream.toByteArray();
+        }
+        catch (Exception e){
+            Printer.getInstance().WriteLine(e.getMessage());
             return null;
         }
     }

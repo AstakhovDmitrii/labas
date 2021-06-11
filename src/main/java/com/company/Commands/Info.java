@@ -6,12 +6,12 @@ import com.company.Writers.Printer;
 
 public class Info extends Command {
     @Override
-    public void Execute(boolean is_thread)  {
-        if(is_thread){
+    public void Execute(boolean isServerSend)  {
+        if(isServerSend){
             Printer.getInstance().WriteLine("начало старта: " + Main.start.toString() + "\r\nкол-во элементов: " + Main.tickets.getTickets().size());
         }
         else {
-            Main.writer.getResponces().add("начало старта: " + Main.start.toString() + "\r\nкол-во элементов: " + Main.tickets.getTickets().size());
+            Main.writer.AddResponce("начало старта: " + Main.start.toString() + "\r\nкол-во элементов: " + Main.tickets.getTickets().size());
         }
     }
 }

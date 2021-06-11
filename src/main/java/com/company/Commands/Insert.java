@@ -8,16 +8,16 @@ import com.company.Writers.Printer;
 
 public class Insert extends Command {
     @Override
-    public void Execute(boolean is_thread) throws Exception {
+    public void Execute(boolean isServerSend) throws Exception {
         if(args.size() >= 2) {
             Main.tickets.getTickets().put(args.get(0), Converter.getInstance().Read(Ticket.class, args.get(1)));
         }
         else{
-            if(is_thread){
+            if(isServerSend){
                 Printer.getInstance().WriteLine("неверное кол-во аргументов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргументов");
+                Main.writer.AddResponce("неверное кол-во аргументов");
             }
         }
     }

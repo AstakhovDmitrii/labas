@@ -8,43 +8,43 @@ import com.company.Writers.Printer;
 
 public class Replace_if_greater  extends Command {
     @Override
-    public void Execute(boolean is_thread) {
+    public void Execute(boolean isServerSend) {
         if(args.size() == 2){
             Ticket ticket = Converter.getInstance().Read(Ticket.class, args.get(1));
             if(Main.tickets.getTickets().get(args.get(0)) != null) {
                 if (Main.tickets.getTickets().get(args.get(0)).compareTo(ticket) > 0) {
                     Main.tickets.getTickets().replace(args.get(0), ticket);
-                    if(is_thread){
+                    if(isServerSend){
                         Printer.getInstance().WriteLine("успех");
                     }
                     else {
-                        Main.writer.getResponces().add("успех");
+                        Main.writer.AddResponce("успех");
                     }
                 }
                 else{
-                    if(is_thread){
+                    if(isServerSend){
                         Printer.getInstance().WriteLine("неудача");
                     }
                     else {
-                        Main.writer.getResponces().add("неудача");
+                        Main.writer.AddResponce("неудача");
                     }
                 }
             }
             else{
-                if(is_thread){
+                if(isServerSend){
                     Printer.getInstance().WriteLine("такого нет");
                 }
                 else {
-                    Main.writer.getResponces().add("такого нет");
+                    Main.writer.AddResponce("такого нет");
                 }
             }
         }
         else{
-            if(is_thread){
+            if(isServerSend){
                 Printer.getInstance().WriteLine("неверное кол-во аргуметов");
             }
             else {
-                Main.writer.getResponces().add("неверное кол-во аргуметов");
+                Main.writer.AddResponce("неверное кол-во аргуметов");
             }
         }
     }

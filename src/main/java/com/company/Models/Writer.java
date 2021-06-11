@@ -1,12 +1,20 @@
 package com.company.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Writer {
+public class Writer implements Serializable {
+
+    private static final long serialVersionUID = 0x0fffa1;
+
     public ArrayList<String> responces;
 
     public ArrayList<String> getResponces() {
         return responces;
+    }
+
+    public void AddResponce(String a){
+        responces.add(a);
     }
 
     public void setResponces(ArrayList<String> responces) {

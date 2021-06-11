@@ -2,9 +2,13 @@ package com.company.Commands;
 
 import com.company.Command;
 
-public class Exist extends Command {
+import java.io.Serializable;
+
+public class Exist extends Command implements Serializable {
+
+    private static final long serialVersionUID = 0x123;
     @Override
-    public void Execute(boolean is_thread) throws Exception {
+    public void Execute(boolean isServerSend) throws Exception {
 
     }
 }

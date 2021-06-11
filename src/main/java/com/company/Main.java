@@ -3,17 +3,14 @@ package com.company;
 import com.company.Commands.*;
 import com.company.Helpers.Converter;
 import com.company.Helpers.Create;
-import com.company.Writers.Logger;
 import com.company.Models.Tickets;
 import com.company.Models.Writer;
+import com.company.Writers.MyLogger;
 import com.company.Writers.Printer;
 import org.reflections.Reflections;
-
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.net.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,10 +26,10 @@ public class Main {
     public static Tickets tickets = new Tickets();
     public static int ids = 0;
     public static LocalDateTime start;
-    public static String ip = "127.0.0.1";
+    public static String ip = "192.168.71.1";
     public static int port = 1112;
     public static Thread console;
-    public static Logger logger;
+    public static MyLogger logger;
     public static String path = "C:\\file.txt";
 
     public static void console_thread(){
@@ -45,7 +42,8 @@ public class Main {
                     if (next.startsWith(command.getName()) || next.toLowerCase(Locale.ROOT).startsWith(command.getName().toLowerCase(Locale.ROOT))) {
                         command.args.addAll(Arrays.asList(next.split(",")));
                         command.args.remove(0);
-                        if(command.getClass() == Insert.class || command.getClass() == Replace_if_greater.class || command.getClass() == Replace_if_lower.class || command.getClass() == Update.class){
+                        String CommandName = command.getName();
+                        if(CommandName.startsWith("Insert") || CommandName.startsWith("Replace_if_greater") || CommandName.startsWith("Replace_if_lower") || CommandName.startsWith("Update")){
                             command.args.add(Converter.getInstance().Write(Create.Set_Fields()));
                         }
                         command.Execute(true);
@@ -74,7 +72,7 @@ public class Main {
             address = InetAddress.getByName(ip);
         }
         try{
-             logger = new Logger(new FileOutputStream("C:\\log.txt"));
+             logger = new MyLogger();
         }
         catch (Exception ignored){
 
@@ -120,9 +118,9 @@ public class Main {
                 recieve = new DatagramPacket(new byte[2048], 2048);
                 server.receive(recieve);
                 logger.WriteLine("получено сообщение от клиента c ip: " + recieve.getAddress());
-                String out = new String(recieve.getData(), StandardCharsets.UTF_16);
-                Command command = Converter.getInstance().Read(Exist.class, out);
-                logger.WriteLine("текст сообщения: " + out);
+                System.out.println(new String(recieve.getData()));
+                Command command = Converter.getInstance().GetCommand(recieve.getData());
+                logger.WriteLine("текст сообщения: " + new String(recieve.getData()));
                 boolean is = false;
                 for (Command command1 : commands) {
                     if (command.getName().startsWith(command1.getName()) || command.getName().toLowerCase(Locale.ROOT).startsWith(command1.getName().toLowerCase(Locale.ROOT))) {
@@ -132,17 +130,16 @@ public class Main {
                     }
                 }
                 if (!is) {
-                    writer.getResponces().add("такой команды не существует");
+                    writer.AddResponce("такой команды не существует");
                 }
-                writer.getResponces().add("введите команду");
+                writer.AddResponce("введите команду");
 
-                byte[] response = Converter.getInstance().Write(writer).getBytes(StandardCharsets.UTF_16);
-                /*for (byte r : responce){
-                    System.out.print(r + "  ");
-                }*/
+                byte[] response = Converter.getInstance().GetResponce(writer);
+
+
                 writer.getResponces().clear();
                 send = new DatagramPacket(response, response.length, recieve.getAddress(), port-1);
-                logger.WriteLine("отправлен ответ на: " + recieve.getAddress() + ".Текст: " + Converter.getInstance().Write(writer));
+                logger.WriteLine("отправлен ответ на: " + recieve.getAddress());
                 server.send(send);
             }
         }
@@ -157,6 +154,5 @@ public class Main {
 
         }
         logger.WriteLine("сервер закончил работу");
-        logger.log_steam.close();
     }
 }
