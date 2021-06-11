@@ -12,14 +12,14 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 import java.io.*;
 import java.time.ZonedDateTime;
 
-public class Converter {// по сути у этого класса всегда один обьект. И сам класс упрвляет им
-    private final Persister Persister;// конвертер
+public class Converter {
+    private final Persister Persister;
     private static Converter instance;
 
     private Converter(){
 
         RegistryMatcher matchers = new RegistryMatcher();
-        matchers.bind(ZonedDateTime.class, Transform_date.class);// создаем способ записи ZonedDateTime
+        matchers.bind(ZonedDateTime.class, Transform_date.class);
         Strategy strategy = new AnnotationStrategy();
         Persister = new Persister( strategy , matchers );
     }
