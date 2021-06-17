@@ -8,14 +8,11 @@ import com.company.Writers.Printer;
 
 public class Help extends Command {
     @Override
-    public void Execute(boolean is_thread, user user, Writer writer) {
+    public Writer Execute(user user) {
+        Writer writer = new Writer();
         for (Command a: Main.commands) {
-            if(is_thread){
-                Printer.getInstance().WriteLine("команда: " + a.getName());
-            }
-            else {
-                writer.getResponces().add("команда: " + a.getName());
-            }
+            writer.AddResponce("команда: " + a.getName());
         }
+        return writer;
     }
 }

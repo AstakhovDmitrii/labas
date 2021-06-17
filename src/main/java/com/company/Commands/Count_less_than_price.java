@@ -7,43 +7,28 @@ import com.company.Models.Writer;
 import com.company.Models.user;
 import com.company.Writers.Printer;
 
-import java.util.ArrayList;
-
 public class Count_less_than_price extends Command {
     @Override
-    public void Execute(boolean is_thread, user user, Writer writer) {
+    public Writer Execute(user user){
+        Writer writer = new Writer();
         if(args.size() == 1){
             try {
                 int count = 0;
-                int price = Integer.parseInt(args.get(0).trim());
+                int price = Integer.parseInt(args.get(0).trim());// trim нужен чтобы убрать пробелы сначала и с конца
                 for (Ticket ticket : Main.tickets.getTickets().values()){
                     if(ticket.getPrice() < price ){
                         count++;
                     }
                 }
-                if(is_thread){
-                    Printer.getInstance().WriteLine("количество " + count);
-                }
-                else {
-                    writer.getResponces().add("количество " + count);
-                }
+                writer.AddResponce("количество " + count);
             }
             catch (NumberFormatException e){
-                if(is_thread){
-                    Printer.getInstance().WriteLine("неправильно введено число");
-                }
-                else {
-                    writer.getResponces().add("неправильно введено число");
-                }
+                writer.AddResponce("неправильно введено число");
             }
         }
         else{
-            if(is_thread){
-                Printer.getInstance().WriteLine("неверное кол-во аргументов");
-            }
-            else {
-                writer.getResponces().add("неверное кол-во аргументов");
-            }
+             writer.AddResponce("неверное кол-во аргументов");
         }
+        return writer;
     }
 }

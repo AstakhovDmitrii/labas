@@ -8,38 +8,23 @@ import com.company.Writers.Printer;
 
 public class Remove_key  extends Command {
     @Override
-    public void Execute(boolean is_thread, user user, Writer writer) {
+    public Writer Execute(user user) {
+        Writer writer = new Writer();
         if(args.size() == 1){
-            if(Main.tickets.getTickets().get(args.get(0)).getCreate() == user.getId() || user.getId() == 0) {
+            if(Main.tickets.getTickets().get(args.get(0)).getCreate() == user.getId()) {
                 if (Main.tickets.getTickets().remove(args.get(0)) != null) {
-                    if (is_thread) {
-                        Printer.getInstance().WriteLine("удаление успешно");
-                    } else {
-                        writer.getResponces().add("удаление успешно");
-                    }
+                    writer.AddResponce("удаление успешно");
                 } else {
-                    if (is_thread) {
-                        Printer.getInstance().WriteLine("удаление не удалось");
-                    } else {
-                        writer.getResponces().add("удаление не удалось");
-                    }
+                    writer.AddResponce("удаление не удалось");
                 }
             }
             else{
-                if (is_thread) {
-                    Printer.getInstance().WriteLine("этот обьект вам не доступен");
-                } else {
-                    writer.getResponces().add("этот обьект вам не доступен");
-                }
+                writer.AddResponce("этот обьект создали не вы");
             }
         }
         else{
-            if(is_thread){
-                Printer.getInstance().WriteLine("неверное кол-во аргументов");
-            }
-            else {
-                writer.getResponces().add("неверное кол-во аргументов");
-            }
+            writer.AddResponce("неверное кол-во аргументов");
         }
+        return writer;
     }
 }

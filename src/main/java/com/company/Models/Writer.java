@@ -12,6 +12,9 @@ public class Writer implements Serializable {
     public ArrayList<String> getResponces() {
         return responces;
     }
+    public void AddResponce(String str){
+        responces.add(str);
+    }
 
     public void setResponces(ArrayList<String> responces) {
         this.responces = responces;

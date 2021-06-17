@@ -1,34 +1,33 @@
-2021-06-06 13:16:29,082 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:16:29.080984700
-2021-06-06 13:16:29,126 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:16:29,137 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:16:43,469 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@2981420c
-2021-06-06 13:17:14,650 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:17:14.648298900
-2021-06-06 13:17:14,694 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:17:14,704 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:17:28,120 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@528f6dcb
-2021-06-06 13:17:28,161 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
-2021-06-06 13:30:01,548 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:30:01.546548
-2021-06-06 13:30:01,595 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:30:01,606 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:30:29,553 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:30:29.552857
-2021-06-06 13:30:29,598 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:30:29,609 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:30:45,356 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@23ecbdb7
-2021-06-06 13:30:45,397 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
-2021-06-06 13:30:56,352 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:30:56.351447100
-2021-06-06 13:30:56,398 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:30:56,408 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:31:28,443 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:31:28.442636300
-2021-06-06 13:31:28,491 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:31:28,502 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:32:12,264 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-06T13:32:12.262176300
-2021-06-06 13:32:12,308 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-06 13:32:12,320 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-06 13:32:50,447 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@23ecbdb7
-2021-06-06 13:32:50,491 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
-2021-06-07 20:53:57,899 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-07T20:53:57.897673
-2021-06-07 20:53:57,963 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-07 20:53:57,966 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
-2021-06-07 20:54:45,744 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-07T20:54:45.743276900
-2021-06-07 20:54:45,793 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
-2021-06-07 20:54:45,812 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
+2021-06-16 11:05:27,176 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-16T11:05:27.174676100
+2021-06-16 11:05:27,228 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
+2021-06-16 11:05:27,240 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
+2021-06-16 11:05:46,653 INFO [pool-1-thread-3] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: null[B@20df71cd
+2021-06-16 11:05:46,672 INFO [pool-1-thread-3] c.c.W.Logger [Logger.java:13] null
+2021-06-16 11:07:18,165 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-16T11:07:18.163927500
+2021-06-16 11:07:18,218 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
+2021-06-16 11:07:18,229 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
+2021-06-16 11:07:57,557 INFO [pool-1-thread-2] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@2c6c9ace
+2021-06-16 11:07:57,557 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@2c6c9ace
+2021-06-16 11:07:57,602 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
+2021-06-16 11:07:57,602 INFO [pool-1-thread-2] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
+2021-06-16 11:08:46,129 INFO [pool-1-thread-2] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@1023e9c2
+2021-06-16 11:08:46,129 INFO [pool-1-thread-1] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@1023e9c2
+2021-06-16 11:08:46,131 INFO [pool-1-thread-2] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
+2021-06-16 11:09:02,383 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-16T11:09:02.382442700
+2021-06-16 11:09:02,429 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
+2021-06-16 11:09:02,440 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
+2021-06-16 11:09:35,865 INFO [pool-1-thread-2] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@15e533dd
+2021-06-16 11:09:35,865 INFO [pool-1-thread-3] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: /192.168.5.1[B@15e533dd
+2021-06-16 11:09:35,911 INFO [pool-1-thread-3] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
+2021-06-16 11:09:35,911 INFO [pool-1-thread-2] c.c.W.Logger [Logger.java:13] отправлен ответ на: /192.168.5.1
+2021-06-16 11:09:49,104 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-16T11:09:49.102876200
+2021-06-16 11:09:49,154 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
+2021-06-16 11:09:49,164 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
+2021-06-16 11:10:05,723 INFO [pool-1-thread-3] c.c.W.Logger [Logger.java:13] получено сообщение от клиента c ip: null[B@5559c52
+2021-06-16 11:10:05,741 INFO [pool-1-thread-3] c.c.W.Logger [Logger.java:13] null
+2021-06-16 11:57:13,210 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-16T11:57:13.209537300
+2021-06-16 11:57:13,261 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
+2021-06-16 11:57:13,272 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен
+2021-06-16 11:59:36,380 INFO [main] c.c.W.Logger [Logger.java:13] старт программы: 2021-06-16T11:59:36.379421300
+2021-06-16 11:59:36,428 INFO [main] c.c.W.Logger [Logger.java:13] установленны все команды
+2021-06-16 11:59:36,440 INFO [main] c.c.W.Logger [Logger.java:13] сервер запущен

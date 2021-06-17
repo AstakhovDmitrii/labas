@@ -20,8 +20,9 @@ public class DB {
     public DB(String url, String user, String password) {
         try {
             connection =  Optional.ofNullable(DriverManager.getConnection(url, user, password));
-        } catch (SQLException ignored) {
-            ignored.printStackTrace();
+        } catch (SQLException e) {
+            Main.logger.error(e.getMessage());
+            Main.logger.info("база данных не доступна");
         }
     }
 
@@ -51,6 +52,9 @@ public class DB {
                 }
 
             } catch (SQLException ex) {
+                Main.logger.error(ex.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
+                return Optional.empty();
             }
 
             return Id;
@@ -71,8 +75,10 @@ public class DB {
                         return Optional.of(
                                 new user(username, password, id));
                     }
-                } catch (SQLException ignored) {
-                    ignored.printStackTrace();
+                } catch (SQLException e) {
+                    Main.logger.error(e.getMessage());
+                    Main.logger.info("возникла ошибка в запросе");
+                    return Optional.empty();
                 }
                 return customer;
             }).orElseThrow();
@@ -99,8 +105,9 @@ public class DB {
                     customers.add(customer);
                 }
 
-            } catch (SQLException ignored) {
-                System.out.println(ignored.getMessage());
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
             }
         });
         return customers;
@@ -112,7 +119,9 @@ public class DB {
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setInt(1, user.getId());
                 statement.executeUpdate();
-            } catch (SQLException ignored) {
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
             }
         });
     }
@@ -123,7 +132,9 @@ public class DB {
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
                 statement.setInt(1, id);
                 statement.executeUpdate();
-            } catch (SQLException ignored) {
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
             }
         });
     }
@@ -134,8 +145,9 @@ public class DB {
                 try {
                     PreparedStatement statement = conn.prepareStatement(sql);
                     statement.executeUpdate();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    Main.logger.error(e.getMessage());
+                    Main.logger.info("возникла ошибка в запросе");
                 }
             });
     }
@@ -176,8 +188,10 @@ public class DB {
                     }
                 }
 
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
+                return Optional.empty();
             }
 
             return Id;
@@ -190,8 +204,9 @@ public class DB {
             try {
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
             }
         });
     }
@@ -217,8 +232,10 @@ public class DB {
                     ticket.setCreationDate(Create);
                     return Optional.of(new keyset(ticket, resultSet.getString("key")));
                 }
-            } catch (SQLException ignored) {
-
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
+                return Optional.empty();
             }
             return customer;
         }).orElseThrow();
@@ -248,7 +265,9 @@ public class DB {
                     tickets.add(keyset);
                 }
 
-            } catch (SQLException ignored) {
+            } catch (SQLException e) {
+                Main.logger.error(e.getMessage());
+                Main.logger.info("возникла ошибка в запросе");
             }
         });
         return tickets;

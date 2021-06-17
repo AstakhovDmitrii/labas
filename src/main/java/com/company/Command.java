@@ -11,7 +11,7 @@ public abstract class Command implements Serializable {// интерфей ко�
 
     private static final long serialVersionUID = 0x123;
 
-    public abstract void Execute(boolean is_thread, user user, Writer writer) throws Exception;//метод для вызова команды
+    public abstract Writer Execute(user user) throws Exception;//метод для вызова команды
 
     public String getName(){
         return name;

@@ -9,24 +9,16 @@ import com.company.Writers.Printer;
 
 public class Show extends Command{
     @Override
-    public void Execute(boolean is_thread, user user, Writer writer) throws Exception {
+    public Writer Execute(user user) throws Exception {
+        Writer writer = new Writer();
         if(Main.tickets.getTickets().size() != 0) {
             for (Ticket ticket : Main.tickets.getTickets().values()) {
-                if(is_thread){
-                    Printer.getInstance().WriteLine(ticket.toString());
-                }
-                else {
-                    writer.getResponces().add(ticket.toString());
-                }
+                writer.AddResponce(ticket.toString());
             }
         }
         else{
-            if(is_thread){
-                Printer.getInstance().WriteLine("нет ни одного элмента");
-            }
-            else {
-                writer.getResponces().add("нет ни одного элмента");
-            }
+            writer.AddResponce("нет ни одного элмента");
         }
+        return writer;
     }
 }
