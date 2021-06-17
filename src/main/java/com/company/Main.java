@@ -17,6 +17,9 @@ public class Main {
     public static String error = "поле введено неверно. Заменено на ";
     public static String username = "";
     public static String password = "";
+    public static Sender sender;
+    public static Printer printer = new Printer(System.in, System.out);
+    public static Converter converter = new Converter();
 
 
     public static void main(String[] args) throws Exception {
@@ -25,23 +28,23 @@ public class Main {
         int host;
         while (true){
             try {
-                Printer.getInstance().WriteLine("введите ip");
-                ip = Printer.getInstance().ReadLine();
+                printer.WriteLine("введите ip");
+                ip = printer.ReadLine();
                 InetAddress.getByName(ip);
-                Printer.getInstance().WriteLine("введите host");
-                host = Integer.parseInt(Printer.getInstance().ReadLine());
+                printer.WriteLine("введите host");
+                host = Integer.parseInt(printer.ReadLine());
                 break;
             }
             catch (Exception e){
-                Printer.getInstance().WriteLine("неверно ввведены значения");
+                printer.WriteLine("неверно ввведены значения");
             }
         }
 
-        Printer.getInstance().WriteLine("введите имя пользователя");
-        username = Printer.getInstance().ReadLine();
+        printer.WriteLine("введите имя пользователя");
+        username = printer.ReadLine();
 
-        Printer.getInstance().WriteLine("введите пароль");
-        password = Printer.getInstance().ReadLine();
+        printer.WriteLine("введите пароль");
+        password = printer.ReadLine();
 
 
         try {
@@ -54,10 +57,10 @@ public class Main {
         catch (Exception ignored){
 
         }
-        Sender.Init(InetAddress.getByName(ip), host);
+        sender = new Sender(InetAddress.getByName(ip), host);
 
         while (true){
-            String next = Printer.getInstance().ReadLine().trim();
+            String next = printer.ReadLine().trim();
             Command server_send = null;
             for (Command command : commands) {
                 if (next.startsWith(command.getName()) || next.startsWith(command.getName().toLowerCase(Locale.ROOT))) {
@@ -80,14 +83,14 @@ public class Main {
             server_send.setPassword(password);
             server_send.setUsername(username);
 
-            byte[] buff = Converter.getInstance().GetCommand(server_send);
-            Sender.getInstance().Send(buff);
+            byte[] buff = converter.GetCommand(server_send);
+            sender.Send(buff);
 
 
-            byte[] a = Sender.getInstance().Recieve();
-            Writer writer = Converter.getInstance().GetResponce(a);
+            byte[] a = sender.Recieve();
+            Writer writer = converter.GetResponce(a);
             for (String str : writer.getResponces()) {
-                Printer.getInstance().WriteLine(str);
+                printer.WriteLine(str);
             }
         }
     }

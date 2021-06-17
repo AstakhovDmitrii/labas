@@ -58,11 +58,11 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setName(String name) {
         if(name == null){
-            Printer.getInstance().WriteLine(Main.error + "name");
+            Main.printer.WriteLine(Main.error + "name");
             name = "name";
         }
         if(name.equals("")){
-            Printer.getInstance().WriteLine(Main.error + "name");
+            Main.printer.WriteLine(Main.error + "name");
             name = "name";
         }
         this.name = name;
@@ -74,7 +74,7 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setCoordinates(Coordinates coordinates) {
         if(coordinates == null){
-            Printer.getInstance().WriteLine(Main.error + "new");
+            Main.printer.WriteLine(Main.error + "new");
             coordinates = new Coordinates();
         }
 
@@ -87,7 +87,7 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setCreationDate(ZonedDateTime creationDate) {
         if(creationDate == null){
-            Printer.getInstance().WriteLine(Main.error + "new");
+            Main.printer.WriteLine(Main.error + "new");
             creationDate = ZonedDateTime.now();
         }
         this.creationDate = creationDate;
@@ -99,7 +99,7 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setPrice(float price) {
         if(price <= 0){
-            Printer.getInstance().WriteLine(Main.error + "0");
+            Main.printer.WriteLine(Main.error + "0");
             price = 0;
         }
         this.price = price;
@@ -119,7 +119,7 @@ public class Ticket implements Comparable<Ticket>{
 
     public void setPerson(Person person) {
         if(person == null){
-            Printer.getInstance().WriteLine(Main.error + "0");
+            Main.printer.WriteLine(Main.error + "0");
             person = new Person();
         }
         this.person = person;

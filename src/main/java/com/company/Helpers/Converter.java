@@ -2,6 +2,7 @@ package com.company.Helpers;
 
 
 import com.company.Command;
+import com.company.Main;
 import com.company.Models.Transform_date;
 import com.company.Writes.Printer;
 import org.simpleframework.xml.convert.AnnotationStrategy;
@@ -12,25 +13,17 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 import java.io.*;
 import java.time.ZonedDateTime;
 
-public class Converter {// по сути у этого класса всегда один обьект. И сам класс упрвляет им
-    private final Persister Persister;// конвертер
-    private static Converter instance;
+public class Converter {
+    private final Persister Persister;
 
-    private Converter(){
-
+    public Converter(){
         RegistryMatcher matchers = new RegistryMatcher();
-        matchers.bind(ZonedDateTime.class, Transform_date.class);// создаем способ записи ZonedDateTime
+        matchers.bind(ZonedDateTime.class, Transform_date.class);
         Strategy strategy = new AnnotationStrategy();
         Persister = new Persister( strategy , matchers );
     }
 
-    public static Converter getInstance() {
-        if(instance == null){
-            instance = new Converter();
-        }
-        return instance;
-    }
-    public <T> String Write(T obj) {
+    public <T> String Serialize(T obj) {
         try {
             Writer writer = new StringWriter();
             Persister.write(obj, writer);
@@ -40,9 +33,9 @@ public class Converter {// по сути у этого класса всегда один обьект. И сам клас
             return null;
         }
     }
-    public <T> T Read(Class<T> T, String str) {
+    public <T> T Deserialize(Class<T> ClassObject, String str) {
         try {
-            return Persister.read(T, str);
+            return Persister.read(ClassObject, str);
         }
         catch (Exception ignored){
             return null;
@@ -55,7 +48,7 @@ public class Converter {// по сути у этого класса всегда один обьект. И сам клас
             return (com.company.Models.Writer) inputStream.readObject();
         }
         catch (Exception e){
-            Printer.getInstance().WriteLine(e.getMessage());
+            Main.printer.WriteLine(e.getMessage());
             return null;
         }
     }
@@ -67,9 +60,10 @@ public class Converter {// по сути у этого класса всегда один обьект. И сам клас
             return stream.toByteArray();
         }
         catch (Exception e){
-            Printer.getInstance().WriteLine(e.getMessage());
+            Main.printer.WriteLine(e.getMessage());
             return null;
         }
     }
 
 }
+

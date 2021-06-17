@@ -7,10 +7,10 @@ import com.company.Writes.Printer;
 public class Login extends Command {
     @Override
     public void Execute() throws Exception {
-        Printer.getInstance().WriteLine("введите имя пользователя");
-        Main.username = Printer.getInstance().ReadLine();
+        Main.printer.WriteLine("введите имя пользователя");
+        Main.username = Main.printer.ReadLine();
 
-        Printer.getInstance().WriteLine("введите пароль");
-        Main.password = Printer.getInstance().ReadLine();
+        Main.printer.WriteLine("введите пароль");
+        Main.password = Main.printer.ReadLine();
     }
 }
