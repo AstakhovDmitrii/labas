@@ -1,0 +1,62 @@
+
+public class Converter {// по сути у этого класса всегда один обьект. И сам класс упрвляет им
+    private final Persister Persister;// конвертер
+    private static Converter instance;
+
+    private Converter(){
+
+        RegistryMatcher matchers = new RegistryMatcher();
+        matchers.bind(ZonedDateTime.class, Transform_date.class);// создаем способ записи ZonedDateTime
+        Strategy strategy = new AnnotationStrategy();
+        Persister = new Persister( strategy , matchers );
+    }
+
+    public static Converter getInstance() {
+        if(instance == null){
+            instance = new Converter();
+        }
+        return instance;
+    }
+    public <T> String Write(T obj) {
+        try {
+            Writer writer = new StringWriter();
+            Persister.write(obj, writer);
+            return writer.toString();
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+    public <T> T Read(Class<T> T, String str) {
+        try {
+            return Persister.read(T, str);
+        }
+        catch (Exception ignored){
+            return null;
+        }
+    }
+
+    public com.company.Models.Writer GetResponce(byte[] buffer){
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(buffer));
+            return (com.company.Models.Writer) inputStream.readObject();
+        }
+        catch (Exception e){
+            Main.printer.WriteLine(e.getMessage());
+            return null;
+        }
+    }
+    public byte[] GetCommand(Command responce){
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ObjectOutputStream outputStream = new ObjectOutputStream(stream);
+            outputStream.writeObject(responce);
+            return stream.toByteArray();
+        }
+        catch (Exception e){
+            Main.printer.WriteLine(e.getMessage());
+            return null;
+        }
+    }
+
+}
