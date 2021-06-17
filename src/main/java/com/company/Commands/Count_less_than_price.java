@@ -3,11 +3,13 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Main;
 import com.company.Models.Ticket;
+import com.company.Models.Writer;
 import com.company.Writers.Printer;
 
 public class Count_less_than_price extends Command {
     @Override
-    public void Execute(boolean isServerSend) {
+    public Writer Execute( ){
+        Writer writer = new Writer();
         if(args.size() == 1){
             try {
                 int count = 0;
@@ -17,29 +19,15 @@ public class Count_less_than_price extends Command {
                         count++;
                     }
                 }
-                if(isServerSend){
-                    Printer.getInstance().WriteLine("количество " + count);
-                }
-                else {
-                    Main.writer.AddResponce("количество " + count);
-                }
+                writer.AddResponce("количество " + count);
             }
             catch (NumberFormatException e){
-                if(isServerSend){
-                    Printer.getInstance().WriteLine("неправильно введено число");
-                }
-                else {
-                    Main.writer.AddResponce("неправильно введено число");
-                }
+                writer.AddResponce("неправильно введено число");
             }
         }
         else{
-            if(isServerSend){
-                Printer.getInstance().WriteLine("неверное кол-во аргументов");
-            }
-            else {
-                Main.writer.AddResponce("неверное кол-во аргументов");
-            }
+             writer.AddResponce("неверное кол-во аргументов");
         }
+        return writer;
     }
 }

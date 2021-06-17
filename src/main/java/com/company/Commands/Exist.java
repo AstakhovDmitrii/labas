@@ -8,7 +8,7 @@ public class Exist extends Command implements Serializable {
 
     private static final long serialVersionUID = 0x123;
     @Override
-    public void Execute(boolean isServerSend) throws Exception {
-
+    public com.company.Models.Writer Execute() throws Exception {
+        return null;
     }
 }
