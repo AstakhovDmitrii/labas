@@ -31,11 +31,11 @@ public class Coordinates {
 
     public void setX(Double x) {
         if(x == null){
-            Printer.getInstance().WriteLine(Main.error + "0");
+            Main.printer.WriteLine(Main.error + "0");
             x = (double)0;
         }
         if(x > 629){
-            Printer.getInstance().WriteLine(Main.error + "0");
+            Main.printer.WriteLine(Main.error + "0");
             x = (double)0;
         }
         this.x = x;
@@ -47,11 +47,11 @@ public class Coordinates {
 
     public void setY(Float y) {
         if(y == null){
-            Printer.getInstance().WriteLine(Main.error + "0");
+            Main.printer.WriteLine(Main.error + "0");
             y = (float)0;
         }
         if(y < -825){
-            Printer.getInstance().WriteLine(Main.error + "011");
+            Main.printer.WriteLine(Main.error + "011");
             y = (float)0;
         }
         this.y = y;

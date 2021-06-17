@@ -2,6 +2,8 @@ package com.company.Helpers;
 
 
 import com.company.Command;
+import com.company.Interfaces.IConverter;
+import com.company.Main;
 import com.company.Models.Transform_date;
 import com.company.Writes.Printer;
 import org.simpleframework.xml.convert.AnnotationStrategy;
@@ -12,25 +14,17 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 import java.io.*;
 import java.time.ZonedDateTime;
 
-public class Converter {
+public class Converter implements IConverter {
     private final Persister Persister;
-    private static Converter instance;
 
-    private Converter(){
-
+    public Converter(){
         RegistryMatcher matchers = new RegistryMatcher();
         matchers.bind(ZonedDateTime.class, Transform_date.class);
         Strategy strategy = new AnnotationStrategy();
         Persister = new Persister( strategy , matchers );
     }
 
-    public static Converter getInstance() {
-        if(instance == null){
-            instance = new Converter();
-        }
-        return instance;
-    }
-    public <T> String Write(T obj) {
+    public <T> String Serialize(T obj) {
         try {
             Writer writer = new StringWriter();
             Persister.write(obj, writer);
@@ -40,26 +34,26 @@ public class Converter {
             return null;
         }
     }
-    public <T> T Read(Class<T> T, String str) {
+    public <T> T Deserialize(Class<T> ClassObject, String str) {
         try {
-            return Persister.read(T, str);
+            return Persister.read(ClassObject, str);
         }
         catch (Exception ignored){
             return null;
         }
     }
 
-    public com.company.Models.Writer GetResponce(byte[] buffer){
+    public com.company.Models.Writer DeSerializeResponce(byte[] buffer){
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(buffer));
             return (com.company.Models.Writer) inputStream.readObject();
         }
         catch (Exception e){
-            Printer.getInstance().WriteLine(e.getMessage());
+            Main.printer.WriteLine(e.getMessage());
             return null;
         }
     }
-    public byte[] GetCommand(Command responce){
+    public byte[] SerializeResponce(Command responce){
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ObjectOutputStream outputStream = new ObjectOutputStream(stream);
@@ -67,7 +61,7 @@ public class Converter {
             return stream.toByteArray();
         }
         catch (Exception e){
-            Printer.getInstance().WriteLine(e.getMessage());
+            Main.printer.WriteLine(e.getMessage());
             return null;
         }
     }

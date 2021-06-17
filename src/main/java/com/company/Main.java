@@ -15,23 +15,30 @@ import java.util.Locale;
 public class Main {
     public static ArrayList<Command> commands = new ArrayList<>();
     public static String error = "поле введено неверно. Заменено на ";
+    public static Printer printer;
+    public static Converter converter;
+    public static Sender sender;
 
 
     public static void main(String[] args) throws Exception {
+
+        printer = new Printer(System.in, System.out);
+        converter = new Converter();
+
 
         String ip = "";
         int host;
         while (true){
             try {
-                Printer.getInstance().WriteLine("введите ip");
-                ip = Printer.getInstance().ReadLine();
+                printer.WriteLine("введите ip");
+                ip = printer.ReadLine();
                 InetAddress.getByName(ip);
-                Printer.getInstance().WriteLine("введите host");
-                host = Integer.parseInt(Printer.getInstance().ReadLine());
+                printer.WriteLine("введите host");
+                host = Integer.parseInt(printer.ReadLine());
                 break;
             }
             catch (Exception e){
-                Printer.getInstance().WriteLine("неверно ввведены значения");
+                printer.WriteLine("неверно ввведены значения");
             }
         }
 
@@ -46,38 +53,40 @@ public class Main {
         catch (Exception ignored){
 
         }
-        Sender.Init(InetAddress.getByName(ip), host);
+
+
+        sender = new Sender(InetAddress.getByName(ip), host);
 
         while (true){
-                String next = Printer.getInstance().ReadLine().trim();
-                Command server_send = null;
-                for (Command command : commands) {
-                    if (next.startsWith(command.getName()) || next.startsWith(command.getName().toLowerCase(Locale.ROOT))) {
-                        command.args = new ArrayList<>(Arrays.asList(next.split(",")));
-                        command.args.remove(0);
-                        command.Execute();
+            String next = printer.ReadLine().trim();
+            Command SendMsg = null;
+            for (Command command : commands) {
+                if (next.startsWith(command.getName()) || next.startsWith(command.getName().toLowerCase(Locale.ROOT))) {
+                    command.args = new ArrayList<>(Arrays.asList(next.split(",")));
+                    command.args.remove(0);
+                    command.Execute();
 
-                        server_send = new Exist();
-                        server_send.setName(command.getName());
-                        server_send.args = command.args;
-                    }
+                    SendMsg = new Exist();
+                    SendMsg.setName(command.getName());
+                    SendMsg.args = command.args;
                 }
-                if(server_send == null){
-                    server_send = new Exist();
-                    server_send.setName(next.split(",")[0]);
-                    server_send.args = new ArrayList<>(Arrays.asList(next.split(",")));
-                    server_send.args.remove(0);
-                }
+            }
+            if(SendMsg == null){
+                SendMsg = new Exist();
+                SendMsg.setName(next.split(",")[0]);
+                SendMsg.args = new ArrayList<>(Arrays.asList(next.split(",")));
+                SendMsg.args.remove(0);
+            }
 
-                byte[] buffer = Converter.getInstance().GetCommand(server_send);
-                Sender.getInstance().Send(buffer);
+            byte[] buffer = converter.SerializeResponce(SendMsg);
+            sender.Send(buffer);
 
 
-                byte[] a = Sender.getInstance().Recieve();
-                Writer writer = Converter.getInstance().GetResponce(a);
-                for (String str : writer.getResponces()) {
-                    Printer.getInstance().WriteLine(str);
-                }
+            byte[] a = sender.Recieve();
+            Writer writer = converter.DeSerializeResponce(a);
+            for (String str : writer.getResponces()) {
+                printer.WriteLine(str);
+            }
         }
     }
 }

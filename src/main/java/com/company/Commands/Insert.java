@@ -3,10 +3,11 @@ package com.company.Commands;
 import com.company.Command;
 import com.company.Helpers.Converter;
 import com.company.Helpers.Create;
+import com.company.Main;
 
 public class Insert extends Command {
     @Override
     public void Execute(){
-        args.add(Converter.getInstance().Write(Create.Set_Fields()));
+        args.add(Main.converter.Serialize(Create.Set_Fields()));
     }
 }

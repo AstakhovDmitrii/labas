@@ -29,7 +29,7 @@ public class Person {
 
     public void setHeight(long height) {
         if(height > 0){
-            Printer.getInstance().WriteLine(Main.error + "1");
+            Main.printer.WriteLine(Main.error + "1");
             height = 1;
         }
         this.height = height;
@@ -41,7 +41,7 @@ public class Person {
 
     public void setWeight(long weight) {
         if(weight > 0){
-            Printer.getInstance().WriteLine(Main.error + "1");
+            Main.printer.WriteLine(Main.error + "1");
             weight = 1;
         }
         this.weight = weight;
