@@ -10,15 +10,20 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class SendThreads implements ThreadController {
     ExecutorService ThreadControl = Executors.newFixedThreadPool(3);
 
-    public SendThreads() {
-        for (int i = 0; i < 4; i++)
-            ThreadControl.submit(this::start);
+    public SendThreads() throws ExecutionException, InterruptedException {
+        for (int i = 0; i < 4; i++) {
+            Future<?> future = ThreadControl.submit(this::start);
+            Main.Printer.WriteLine(future.get());
+            Main.Logger.info((String) future.get());
+        }
     }
 
     @Override
