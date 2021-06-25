@@ -1,8 +1,6 @@
 package com.company.Commands;
 
-import ch.qos.logback.core.ConsoleAppender;
 import com.company.Command;
-import com.company.Helpers.Converter;
 import com.company.Main;
 import com.company.Models.Ticket;
 import com.company.Models.Writer;
@@ -13,11 +11,11 @@ public class Replace_if_greater  extends Command {
     public Writer Execute(user user) {
         Writer writer = new Writer();
         if(args.size() == 2){
-            Ticket ticket = Main.converter.Deserialize(Ticket.class, args.get(1));
-            if(Main.tickets.getTickets().get(args.get(0)).getCreate() == user.getId()) {
-                if (Main.tickets.getTickets().get(args.get(0)) != null) {
-                    if (Main.tickets.getTickets().get(args.get(0)).compareTo(ticket) > 0) {
-                        Main.tickets.getTickets().replace(args.get(0), ticket);
+            Ticket ticket = Main.Converter.Deserialize(Ticket.class, args.get(1));
+            if(Main.Tickets.getTickets().get(args.get(0)).getCreate() == user.getId()) {
+                if (Main.Tickets.getTickets().get(args.get(0)) != null) {
+                    if (Main.Tickets.getTickets().get(args.get(0)).compareTo(ticket) > 0) {
+                        Main.Tickets.getTickets().replace(args.get(0), ticket);
                         writer.AddResponce("успех");
                     } else {
                         writer.AddResponce("неудача");

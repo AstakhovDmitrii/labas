@@ -3,14 +3,13 @@ package com.company.Helpers;
 
 import com.company.Main;
 import com.company.Models.*;
-import com.company.Writers.Printer;
 
 public class Create {
     public static String getString(String name){
         String str = "";
         while (str.equals("")){
-            Main.printer.WriteLine("Введите поле " + name);
-            str = Main.printer.ReadLine();
+            Main.Printer.WriteLine("Введите поле " + name);
+            str = Main.Printer.ReadLine();
         }
         return str;
     }
@@ -18,8 +17,8 @@ public class Create {
         int str;
         while (true){
             try {
-                Main.printer.WriteLine("Введите поле " + name);
-                str = Integer.parseInt(Main.printer.ReadLine());
+                Main.Printer.WriteLine("Введите поле " + name);
+                str = Integer.parseInt(Main.Printer.ReadLine());
                 break;
             }
             catch (Exception ignored){
@@ -32,8 +31,8 @@ public class Create {
         long str;
         while (true){
             try {
-                Main.printer.WriteLine("Введите поле " + name);
-                str = Long.parseLong(Main.printer.ReadLine());
+                Main.Printer.WriteLine("Введите поле " + name);
+                str = Long.parseLong(Main.Printer.ReadLine());
                 break;
             }
             catch (Exception ignored){
@@ -46,8 +45,8 @@ public class Create {
         double str;
         while (true){
             try {
-                Main.printer.WriteLine("Введите поле " + name);
-                str = Double.parseDouble(Main.printer.ReadLine());
+                Main.Printer.WriteLine("Введите поле " + name);
+                str = Double.parseDouble(Main.Printer.ReadLine());
                 break;
             }
             catch (Exception ignored){
@@ -60,8 +59,8 @@ public class Create {
         float str;
         while (true){
             try {
-                Main.printer.WriteLine("Введите поле " + name);
-                str = Float.parseFloat(Main.printer.ReadLine());
+                Main.Printer.WriteLine("Введите поле " + name);
+                str = Float.parseFloat(Main.Printer.ReadLine());
                 break;
             }
             catch (Exception ignored){
@@ -76,25 +75,25 @@ public class Create {
         product.setPerson(new Person());
         String name = getString("name");
         while (name == null || name.equals("")) {
-            Main.printer.InvalidValue();
+            Main.Printer.InvalidValue();
             name = getString("name");
         }
 
         int price = getInt("price");
         while (price <= 0) {
-            Main.printer.InvalidValue();
+            Main.Printer.InvalidValue();
             price = getInt("price");
         }
 
         TicketType type = null;
         while (true){
             try{
-                Main.printer.WriteLine("Введите TicketType");
+                Main.Printer.WriteLine("Введите TicketType");
                 for (TicketType ticketType: TicketType.values()) {
-                    Main.printer.Write("\t\t\t\t" + ticketType);
+                    Main.Printer.Write("\t\t\t\t" + ticketType);
                 }
-                Main.printer.WriteLine("");
-                String next = Main.printer.ReadLine();
+                Main.Printer.WriteLine("");
+                String next = Main.Printer.ReadLine();
                 if(next.equals("null") || next.equals("")){
                     break;
                 }
@@ -105,31 +104,31 @@ public class Create {
 
             }
         }
-        Main.printer.WriteLine("Вводится coordinate");
+        Main.Printer.WriteLine("Вводится coordinate");
 
         double x = getDouble("X");
         while (x > 629) {
-            Main.printer.InvalidValue();
+            Main.Printer.InvalidValue();
             x = getDouble("X");
         }
 
         float y = getFloat("Y");
         while (y <= -825) {
-            Main.printer.InvalidValue();
+            Main.Printer.InvalidValue();
             y = getFloat("Y");
         }
 
-        Main.printer.WriteLine("Вводится Person");
+        Main.Printer.WriteLine("Вводится Person");
 
         long height = getLong("height");
         while (height <= 0) {
-            Main.printer.InvalidValue();
+            Main.Printer.InvalidValue();
             height = getLong("height");
         }
 
         long weight = getLong("weight");
         while (weight <= 0) {
-            Main.printer.InvalidValue();
+            Main.Printer.InvalidValue();
             weight = getLong("weight");
         }
 

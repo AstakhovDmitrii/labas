@@ -1,10 +1,8 @@
 package com.company.Helpers;
 
-import com.company.Command;
 import com.company.Commands.Exist;
 import com.company.Main;
 import com.company.Models.Transform_date;
-import com.company.Writers.Printer;
 import org.simpleframework.xml.convert.AnnotationStrategy;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.strategy.Strategy;
@@ -44,7 +42,7 @@ public class Converter {
             return stream.toByteArray();
         }
         catch (Exception e){
-            Main.printer.WriteLine(e.getMessage());
+            Main.Printer.WriteLine(e.getMessage());
             return null;
         }
     }

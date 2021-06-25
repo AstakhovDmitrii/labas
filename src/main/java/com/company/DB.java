@@ -21,8 +21,8 @@ public class DB {
         try {
             connection =  Optional.ofNullable(DriverManager.getConnection(url, user, password));
         } catch (SQLException e) {
-            Main.logger.error(e.getMessage());
-            Main.logger.info("база данных не доступна");
+            Main.Logger.error(e.getMessage());
+            Main.Logger.info("база данных не доступна");
         }
     }
 
@@ -39,7 +39,7 @@ public class DB {
                                  Statement.RETURN_GENERATED_KEYS)) {
 
                 statement.setString(1, user.getName());
-                statement.setString(2, DigestUtils.md5Hex(user.getPassword()));
+                statement.setString(2, user.getPassword());
 
                 int numberOfInsertedRows = statement.executeUpdate();
 
@@ -52,8 +52,8 @@ public class DB {
                 }
 
             } catch (SQLException ex) {
-                Main.logger.error(ex.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(ex.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
                 return Optional.empty();
             }
 
@@ -76,8 +76,8 @@ public class DB {
                                 new user(username, password, id));
                     }
                 } catch (SQLException e) {
-                    Main.logger.error(e.getMessage());
-                    Main.logger.info("возникла ошибка в запросе");
+                    Main.Logger.error(e.getMessage());
+                    Main.Logger.info("возникла ошибка в запросе");
                     return Optional.empty();
                 }
                 return customer;
@@ -106,8 +106,8 @@ public class DB {
                 }
 
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
             }
         });
         return customers;
@@ -120,8 +120,8 @@ public class DB {
                 statement.setInt(1, user.getId());
                 statement.executeUpdate();
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
             }
         });
     }
@@ -133,8 +133,8 @@ public class DB {
                 statement.setInt(1, id);
                 statement.executeUpdate();
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
             }
         });
     }
@@ -146,8 +146,8 @@ public class DB {
                     PreparedStatement statement = conn.prepareStatement(sql);
                     statement.executeUpdate();
                 } catch (SQLException e) {
-                    Main.logger.error(e.getMessage());
-                    Main.logger.info("возникла ошибка в запросе");
+                    Main.Logger.error(e.getMessage());
+                    Main.Logger.info("возникла ошибка в запросе");
                 }
             });
     }
@@ -174,7 +174,7 @@ public class DB {
                 statement.setInt(7 , (int)ticket.getPerson().getHeight());
                 statement.setInt(8 , (int)ticket.getPerson().getWeight());
 
-                statement.setInt(9, 1);
+                statement.setInt(9, ticket.getCreate());
                 statement.setString(10, key);
 
 
@@ -189,8 +189,8 @@ public class DB {
                 }
 
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
                 return Optional.empty();
             }
 
@@ -205,8 +205,8 @@ public class DB {
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.executeUpdate();
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
             }
         });
     }
@@ -233,8 +233,8 @@ public class DB {
                     return Optional.of(new keyset(ticket, resultSet.getString("key")));
                 }
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
                 return Optional.empty();
             }
             return customer;
@@ -266,8 +266,8 @@ public class DB {
                 }
 
             } catch (SQLException e) {
-                Main.logger.error(e.getMessage());
-                Main.logger.info("возникла ошибка в запросе");
+                Main.Logger.error(e.getMessage());
+                Main.Logger.info("возникла ошибка в запросе");
             }
         });
         return tickets;

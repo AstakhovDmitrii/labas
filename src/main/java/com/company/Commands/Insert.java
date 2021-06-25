@@ -1,7 +1,6 @@
 package com.company.Commands;
 
 import com.company.Command;
-import com.company.Helpers.Converter;
 import com.company.Main;
 import com.company.Models.Ticket;
 import com.company.Models.Writer;
@@ -12,9 +11,9 @@ public class Insert extends Command {
     public Writer Execute(user user) throws Exception {
         Writer writer = new Writer();
         if(args.size() >= 2) {
-            Ticket ticket = Main.converter.Deserialize(Ticket.class, args.get(1));
+            Ticket ticket = Main.Converter.Deserialize(Ticket.class, args.get(1));
             ticket.setCreate(user.getId());
-            Main.tickets.getTickets().put(args.get(0), ticket);
+            Main.Tickets.getTickets().put(args.get(0), ticket);
         }
         else{
                 writer.getResponces().add("неверное кол-во аргументов");

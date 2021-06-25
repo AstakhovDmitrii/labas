@@ -5,7 +5,6 @@ import com.company.Main;
 import com.company.Models.Ticket;
 import com.company.Models.Writer;
 import com.company.Models.user;
-import com.company.Writers.Printer;
 
 public class Count_less_than_price extends Command {
     @Override
@@ -15,7 +14,7 @@ public class Count_less_than_price extends Command {
             try {
                 int count = 0;
                 int price = Integer.parseInt(args.get(0).trim());// trim нужен чтобы убрать пробелы сначала и с конца
-                for (Ticket ticket : Main.tickets.getTickets().values()){
+                for (Ticket ticket : Main.Tickets.getTickets().values()){
                     if(ticket.getPrice() < price ){
                         count++;
                     }
