@@ -107,7 +107,7 @@ public class DB {
 
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("ошибка в запросе");
             }
         });
         return customers;
