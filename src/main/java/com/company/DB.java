@@ -22,7 +22,7 @@ public class DB {
             connection =  Optional.ofNullable(DriverManager.getConnection(url, user, password));
         } catch (SQLException e) {
             Main.Logger.error(e.getMessage());
-            Main.Logger.info("база данных не доступна");
+            Main.Logger.info("Р±Р°Р·Р° РґР°РЅРЅС‹С… РЅРµ РґРѕСЃС‚СѓРїРЅР°");
         }
     }
 
@@ -53,7 +53,7 @@ public class DB {
 
             } catch (SQLException ex) {
                 Main.Logger.error(ex.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
                 return Optional.empty();
             }
 
@@ -77,7 +77,7 @@ public class DB {
                     }
                 } catch (SQLException e) {
                     Main.Logger.error(e.getMessage());
-                    Main.Logger.info("возникла ошибка в запросе");
+                    Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
                     return Optional.empty();
                 }
                 return customer;
@@ -107,7 +107,7 @@ public class DB {
 
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("ошибка в запросе");
+                Main.Logger.info("РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
             }
         });
         return customers;
@@ -121,7 +121,7 @@ public class DB {
                 statement.executeUpdate();
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
             }
         });
     }
@@ -134,7 +134,7 @@ public class DB {
                 statement.executeUpdate();
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
             }
         });
     }
@@ -147,7 +147,7 @@ public class DB {
                     statement.executeUpdate();
                 } catch (SQLException e) {
                     Main.Logger.error(e.getMessage());
-                    Main.Logger.info("возникла ошибка в запросе");
+                    Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
                 }
             });
     }
@@ -190,7 +190,7 @@ public class DB {
 
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
                 return Optional.empty();
             }
 
@@ -206,7 +206,7 @@ public class DB {
                 statement.executeUpdate();
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
             }
         });
     }
@@ -234,7 +234,7 @@ public class DB {
                 }
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
                 return Optional.empty();
             }
             return customer;
@@ -267,7 +267,7 @@ public class DB {
 
             } catch (SQLException e) {
                 Main.Logger.error(e.getMessage());
-                Main.Logger.info("возникла ошибка в запросе");
+                Main.Logger.info("РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РІ Р·Р°РїСЂРѕСЃРµ");
             }
         });
         return tickets;
